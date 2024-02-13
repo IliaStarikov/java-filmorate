@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.filmorate.exceptions.NotFoundException;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
@@ -40,12 +41,11 @@ public class FilmController {
     @PutMapping
     public Film update(@Valid @RequestBody final Film film) {
         if (!films.containsKey(film.getId())) {
-            throw new ValidationException("Ключ не найден: " + film.getId());
+            throw new NotFoundException("Ключ не найден: " + film.getId());
         }
         if (film.getReleaseDate().isBefore(FIRST_FILM)) {
             throw new ValidationException("Дата релиза не может быть раньше " + FIRST_FILM);
         }
-
         films.put(film.getId(), film);
         log.info("Фильм обновлен {}", film);
         return film;
