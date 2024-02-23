@@ -15,6 +15,7 @@ public class ErrorHandler {
     public ErrorResponse badRequest(ValidationException e) {
         return new ErrorResponse(e.getMessage());
     }
+
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse notFound(RuntimeException e) {

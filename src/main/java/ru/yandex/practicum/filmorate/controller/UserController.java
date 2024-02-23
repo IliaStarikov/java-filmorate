@@ -40,6 +40,7 @@ public class UserController {
     public User getUserById(@PathVariable("id") Long userId) {
         return userService.getUserById(userId);
     }
+
     @PutMapping("{id}/friends/{friendId}")
     public void putFriend(
             @PathVariable("id") Long userId,
@@ -58,6 +59,7 @@ public class UserController {
     public List<User> getUserFriends(@PathVariable("id") Long userId) {
         return userService.getFriends(userId);
     }
+
     @GetMapping("{id}/friends/common/{otherId}")
     public List<User> getCommonFriends(
             @PathVariable("id") Long userId,

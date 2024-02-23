@@ -15,6 +15,7 @@ import java.util.Map;
 public class InMemoryUserStorage implements UserStorage {
     private final Map<Long, User> users = new HashMap<>();
     private long userId = 0L;
+
     @Override
     public List<User> findAll() {
         return new ArrayList<>(users.values());
@@ -41,6 +42,7 @@ public class InMemoryUserStorage implements UserStorage {
         checkUserExists(userId);
         return users.get(userId);
     }
+
     public void checkUserExists(Long... userIds) throws NotFoundException {
         for (Long userId : userIds) {
             if (!users.containsKey(userId)) {

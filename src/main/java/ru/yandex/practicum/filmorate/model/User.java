@@ -32,9 +32,11 @@ public class User {
     public Set<Long> getFriends() {
         return new HashSet<>(friends);
     }
+
     public void addFriends(Long idFriend) {
         friends.add(idFriend);
     }
+
     public void deleteFriend(Long idFriend) {
         friends.remove(idFriend);
     }
