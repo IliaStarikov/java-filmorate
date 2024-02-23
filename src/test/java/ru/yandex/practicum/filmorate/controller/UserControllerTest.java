@@ -150,6 +150,6 @@ class UserControllerTest {
         this.mockMvc.perform(put("/users")
                         .contentType(CONTENT_TYPE)
                         .content(updateUser))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 }

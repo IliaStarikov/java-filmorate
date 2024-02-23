@@ -129,7 +129,7 @@ class FilmControllerTest {
             this.mockMvc.perform(put("/films")
                             .contentType(CONTENT_TYPE)
                             .content(updateFilm))
-                    .andExpect(status().isBadRequest());
+                    .andExpect(status().isNotFound());
         } catch (NestedServletException ex) {
             assertTrue(ex.getCause() instanceof NotFoundException);
         }
