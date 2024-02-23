@@ -5,13 +5,16 @@ import lombok.Data;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * User.
  */
 @Data
-@AllArgsConstructor
+// @AllArgsConstructor
 public class User {
+    private Set<Long> friends = new HashSet<>();
     private long id;
     private String name;
 
@@ -25,4 +28,14 @@ public class User {
 
     @Past(message = "Дата рождения не может быть в будущем")
     private LocalDate birthday;
+
+    public Set<Long> getFriends() {
+        return new HashSet<>(friends);
+    }
+    public void addFriends(Long idFriend) {
+        friends.add(idFriend);
+    }
+    public void deleteFriend(Long idFriend) {
+        friends.remove(idFriend);
+    }
 }

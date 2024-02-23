@@ -151,13 +151,9 @@ class UserControllerTest {
     void updateUser_TrueNotFoundException() throws Exception {
         String updateUser = "{\"id\":\"9999\",\"login\":\"dolor\",\"email\":\"mail@mail.ru\"," +
                 "\"birthday\":\"1946-08-20\"}";
-        try {
-            this.mockMvc.perform(put("/users")
-                            .contentType(CONTENT_TYPE)
-                            .content(updateUser))
-                    .andExpect(status().isInternalServerError());
-        } catch (NestedServletException ex) {
-            assertTrue(ex.getCause() instanceof NotFoundException);
-        }
+        this.mockMvc.perform(put("/users")
+                        .contentType(CONTENT_TYPE)
+                        .content(updateUser))
+                .andExpect(status().isBadRequest());
     }
 }
