@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.constraints.*;
@@ -12,7 +11,6 @@ import java.util.Set;
  * User.
  */
 @Data
-// @AllArgsConstructor
 public class User {
     private Set<Long> friends = new HashSet<>();
     private long id;
