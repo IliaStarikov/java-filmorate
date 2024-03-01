@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.advice;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -7,18 +8,28 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.yandex.practicum.filmorate.model.ErrorResponse;
 import ru.yandex.practicum.filmorate.exceptions.*;
 
+@Slf4j
 @RestControllerAdvice
 public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse badRequest(ValidationException e) {
+        log.warn("Получен статус 400 Bad request {}", e.getMessage());
         return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse notFound(RuntimeException e) {
+        log.warn("Получен статус 404 Not found {}", e.getMessage());
         return new ErrorResponse(e.getMessage());
+    }
+
+    @ExceptionHandler(Throwable.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse internalServerError(Throwable e) {
+        log.error("Получен статус 500 Internal Server Error {}", e.getMessage());
+        return new ErrorResponse("Internal server error occurred. Please contact administrator.");
     }
 }

@@ -45,7 +45,6 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     public void checkFilmExists(Long filmId) throws NotFoundException {
         if (!films.containsKey(filmId)) {
-            log.warn("Фильм с ID: {} не найден.", filmId);
             throw new NotFoundException(String.format("Фильм с ID: %s не найден.", filmId));
         }
     }

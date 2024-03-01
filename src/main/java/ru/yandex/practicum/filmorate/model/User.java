@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.model;
 
 import lombok.Data;
+import lombok.Getter;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ import java.util.Set;
  */
 @Data
 public class User {
-    private Set<Long> friends = new HashSet<>();
+
     private long id;
     private String name;
 
@@ -27,9 +28,8 @@ public class User {
     @Past(message = "Дата рождения не может быть в будущем")
     private LocalDate birthday;
 
-    public Set<Long> getFriends() {
-        return new HashSet<>(friends);
-    }
+    @Getter
+    private Set<Long> friends = new HashSet<>();
 
     public void addFriends(Long idFriend) {
         friends.add(idFriend);

@@ -1,6 +1,6 @@
 package ru.yandex.practicum.filmorate.service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
@@ -15,12 +15,12 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class FilmService {
     private static final LocalDate FIRST_FILM = LocalDate.of(1895, 12, 28);
 
-    FilmStorage filmStorage;
-    UserStorage userStorage;
+    private final FilmStorage filmStorage;
+    private final UserStorage userStorage;
 
     public List<Film> getAll() {
         return filmStorage.getAll();
@@ -63,7 +63,6 @@ public class FilmService {
 
     private void isValid(Film film) throws ValidationException {
         if (film.getReleaseDate().isBefore(FIRST_FILM)) {
-            log.warn("Дата релиза фильма не может быть раньше {}.", FIRST_FILM);
             throw new ValidationException(String.format("Ошибка валидации, неверная дата релиза %s", film.getName()));
         }
     }

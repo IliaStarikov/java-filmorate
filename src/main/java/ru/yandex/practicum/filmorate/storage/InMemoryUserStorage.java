@@ -46,7 +46,6 @@ public class InMemoryUserStorage implements UserStorage {
     public void checkUserExists(Long... userIds) throws NotFoundException {
         for (Long userId : userIds) {
             if (!users.containsKey(userId)) {
-                log.warn("Пользователь с ID: {} не найден.", userId);
                 throw new NotFoundException(String.format("Пользователь с ID: %s не найден.", userId));
             }
         }

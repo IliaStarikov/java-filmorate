@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 @Slf4j
 @AllArgsConstructor
 public class UserService {
-    UserStorage userStorage;
+
+    private final UserStorage userStorage;
 
     public List<User> findAll() {
         return userStorage.findAll();
@@ -25,7 +26,7 @@ public class UserService {
         return userStorage.create(user);
     }
 
-    public User put(User user) {
+    public User update(User user) {
         setNameIfNotPresent(user);
         return userStorage.put(user);
     }

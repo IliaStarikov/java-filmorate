@@ -19,7 +19,7 @@ import java.util.*;
 @AllArgsConstructor
 public class UserController {
 
-    UserService userService;
+    private final UserService userService;
 
     @GetMapping
     public List<User> findAll() {
@@ -33,7 +33,7 @@ public class UserController {
 
     @PutMapping
     public User put(@Valid @RequestBody User user) {
-        return userService.put(user);
+        return userService.update(user);
     }
 
     @GetMapping("{id}")
