@@ -5,10 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.util.NestedServletException;
-import ru.yandex.practicum.filmorate.exceptions.NotFoundException;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -151,13 +147,9 @@ class UserControllerTest {
     void updateUser_TrueNotFoundException() throws Exception {
         String updateUser = "{\"id\":\"9999\",\"login\":\"dolor\",\"email\":\"mail@mail.ru\"," +
                 "\"birthday\":\"1946-08-20\"}";
-        try {
-            this.mockMvc.perform(put("/users")
-                            .contentType(CONTENT_TYPE)
-                            .content(updateUser))
-                    .andExpect(status().isInternalServerError());
-        } catch (NestedServletException ex) {
-            assertTrue(ex.getCause() instanceof NotFoundException);
-        }
+        this.mockMvc.perform(put("/users")
+                        .contentType(CONTENT_TYPE)
+                        .content(updateUser))
+                .andExpect(status().isNotFound());
     }
 }

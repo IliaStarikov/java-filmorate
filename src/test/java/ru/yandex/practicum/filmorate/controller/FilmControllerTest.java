@@ -8,7 +8,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.util.NestedServletException;
 import ru.yandex.practicum.filmorate.exceptions.NotFoundException;
-import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -51,14 +50,10 @@ class FilmControllerTest {
         inValidFilm = "{\"name\":\"Film Name\",\"description\":\"Film description\",\"releaseDate\":\"1895-12-27\"," +
                 "\"duration\":100}";
 
-        try {
-            this.mockMvc.perform(post("/films")
-                            .contentType(CONTENT_TYPE)
-                            .content(inValidFilm))
-                    .andExpect(status().isInternalServerError());
-        } catch (NestedServletException ex) {
-            assertTrue(ex.getCause() instanceof ValidationException);
-        }
+        this.mockMvc.perform(post("/films")
+                        .contentType(CONTENT_TYPE)
+                        .content(inValidFilm))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -134,31 +129,27 @@ class FilmControllerTest {
             this.mockMvc.perform(put("/films")
                             .contentType(CONTENT_TYPE)
                             .content(updateFilm))
-                    .andExpect(status().isInternalServerError());
+                    .andExpect(status().isNotFound());
         } catch (NestedServletException ex) {
             assertTrue(ex.getCause() instanceof NotFoundException);
         }
     }
 
     @Test
-    void updateFilm_TrueValidationException() throws Exception {
-        String film = "{\"name\":\"Name\",\"description\":\"Description\"," +
+    void updateFilm_inValidReleaseDateReturnBadRequest() throws Exception {
+        String validFilm = "{\"name\":\"Name\",\"description\":\"Description\"," +
                 "\"releaseDate\":\"1895-12-29\",\"duration\":120}";
         mockMvc.perform(post("/films")
                         .contentType(CONTENT_TYPE)
-                        .content(film))
+                        .content(validFilm))
                 .andExpect(status().isOk());
 
         inValidFilm = "{\"id\":\"1\",\"name\":\"Name\",\"description\":\"Description\"," +
                 "\"releaseDate\":\"1895-12-27\",\"duration\":120}";
-        try {
-            this.mockMvc.perform(put("/films")
-                            .contentType(CONTENT_TYPE)
-                            .content(inValidFilm))
-                    .andExpect(status().isInternalServerError());
-        } catch (NestedServletException ex) {
-            assertTrue(ex.getCause() instanceof ValidationException);
-        }
+        this.mockMvc.perform(put("/films")
+                        .contentType(CONTENT_TYPE)
+                        .content(inValidFilm))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
