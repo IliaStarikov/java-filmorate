@@ -12,7 +12,7 @@ Template repository for Filmorate project.
 1. films:
 <!-- TOC -->
 * film_id - PK идентификатор фильма
-* mpa_id FK (ссылает к таблице mpa_rating) - идентификатор рейтинга
+* mpa_id - FK (ссылается на таблицу mpa_rating) - идентификатор рейтинга
 * name - название фильма
 * description - описание фильма
 * release_date - дата релиза
@@ -25,8 +25,8 @@ Template repository for Filmorate project.
 <!-- TOC -->
 3. films_genres:
 <!-- TOC -->
-* film_id -PK (ссылается на таблицу films) идентификатор фильма
-* genres_id - PK (ссылается на таблицу genres) идентификатор пользователя
+* film_id - FK (ссылается на таблицу films) идентификатор фильма
+* genres_id - FK (ссылается на таблицу genres) идентификатор пользователя
 <!-- TOC -->
 4. genres:
 <!-- TOC -->
@@ -35,8 +35,8 @@ Template repository for Filmorate project.
 <!-- TOC -->
 5. likes_films:
 <!-- TOC -->
-* film_id - PK (ссылается на таблицу films) идентификатор фильма
-* user_id - PK (ссылается на таблицу users) идентификатор пользователя
+* film_id - FK (ссылается на таблицу films) идентификатор фильма
+* user_id - FK (ссылается на таблицу users) идентификатор пользователя
 <!-- TOC -->
 6. users:
 <!-- TOC -->
@@ -48,8 +48,8 @@ Template repository for Filmorate project.
 <!-- TOC -->
 7. friendship:
 <!-- TOC -->
-* user_id - PK (ссылается на таблицу user) идентификатор пользователя
-* friend_id (ссылается на таблицу user) идентификатор друга
+* user_id - FK (ссылается на таблицу users) идентификатор пользователя
+* friend_id - идентификатор друга
 * status - состояние статуса добавления в друзья (true/false)
 <!-- TOC -->
 # Примеры запросов к БД:
