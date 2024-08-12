@@ -48,9 +48,9 @@ public class FilmGenresDbStorage implements FilmGenresStorage {
 
         Map<Integer, Set<Genre>> genres = new HashMap<>();
 
-        List<Integer> IdsFilms = films.stream().map(Film::getId).collect(Collectors.toList());
+        List<Integer> filmIds = films.stream().map(Film::getId).collect(Collectors.toList());
 
-        String placeholders = String.join(",", Collections.nCopies(IdsFilms.size(), "?"));
+        String placeholders = String.join(",", Collections.nCopies(filmIds.size(), "?"));
 
         String sqlQuery = String.format("SELECT fg.film_id, fg.genre_id, g.name " +
                 "FROM film_genres fg " +
@@ -58,7 +58,7 @@ public class FilmGenresDbStorage implements FilmGenresStorage {
                 "WHERE film_id IN (%s) " +
                 "ORDER BY fg.film_id, fg.genre_id", placeholders);
 
-        SqlRowSet rs = jdbcTemplate.queryForRowSet(sqlQuery, IdsFilms.toArray());
+        SqlRowSet rs = jdbcTemplate.queryForRowSet(sqlQuery, filmIds.toArray());
 
         while (rs.next()) {
             int filmID = rs.getInt("film_id");
