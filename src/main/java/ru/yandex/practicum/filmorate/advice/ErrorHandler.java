@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.yandex.practicum.filmorate.model.ErrorResponse;
 import ru.yandex.practicum.filmorate.exceptions.*;
 
+import javax.validation.ConstraintViolationException;
+
 @Slf4j
 @RestControllerAdvice("ru.yandex.practicum.filmorate.controller")
 public class ErrorHandler {
 
-    @ExceptionHandler
+    @ExceptionHandler({ValidationException.class, EntityNotFoundException.class, ConstraintViolationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse badRequest(ValidationException e) {
+    public ErrorResponse badRequest(RuntimeException e) {
         log.warn("Получен статус 400 Bad request {}", e.getMessage());
         return new ErrorResponse(e.getMessage());
     }
@@ -27,9 +29,9 @@ public class ErrorHandler {
         return new ErrorResponse(e.getMessage());
     }
 
-    @ExceptionHandler(NotFoundException.class)
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse notFound(RuntimeException e) {
+    public ErrorResponse notFound(NotFoundException e) {
         log.warn("Получен статус 404 Not found {}", e.getMessage());
         return new ErrorResponse(e.getMessage());
     }
