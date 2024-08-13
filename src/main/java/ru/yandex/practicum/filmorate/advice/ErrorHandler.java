@@ -15,7 +15,7 @@ import javax.validation.ConstraintViolationException;
 @RestControllerAdvice("ru.yandex.practicum.filmorate.controller")
 public class ErrorHandler {
 
-    @ExceptionHandler({ValidationException.class, EntityNotFoundException.class, ConstraintViolationException.class})
+    @ExceptionHandler({ValidationException.class, ConstraintViolationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse badRequest(RuntimeException e) {
         log.warn("Получен статус 400 Bad request {}", e.getMessage());

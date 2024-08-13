@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.model.MPA;
-import ru.yandex.practicum.filmorate.exceptions.EntityNotFoundException;
 import ru.yandex.practicum.filmorate.exceptions.NotFoundException;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.storage.film_genres.FilmGenresStorage;
@@ -135,7 +134,7 @@ public class FilmService {
     private Set<Genre> getGenresToFilm(Film film) {
         Set<Genre> genres = film.getGenres().stream()
                 .map(genre -> genresDbStorage.getGenreById(genre.getId())
-                        .orElseThrow(() -> new EntityNotFoundException("Указан несуществующий жанр.")))
+                        .orElseThrow(() -> new ValidationException("Указан несуществующий жанр.")))
                 .collect(Collectors.toSet());
 
         film.addGenre(genres);
@@ -145,6 +144,6 @@ public class FilmService {
     private MPA getMPAtoFilm(Film film) {
         int mpaID = film.getMpa().getId();
         return mpaDbStorage.getMPAById(mpaID)
-                .orElseThrow(() -> new EntityNotFoundException("Указан несуществующий MPA рейтинг."));
+                .orElseThrow(() -> new ValidationException("Указан несуществующий MPA рейтинг."));
     }
 }
