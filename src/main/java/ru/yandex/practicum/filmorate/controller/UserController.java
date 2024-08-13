@@ -1,7 +1,6 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
@@ -15,7 +14,6 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/users")
-@Slf4j
 @RequiredArgsConstructor
 public class UserController {
 
@@ -23,7 +21,7 @@ public class UserController {
 
     @GetMapping
     public List<User> findAll() {
-        return userService.findAll();
+        return userService.getAll();
     }
 
     @PostMapping
@@ -39,6 +37,11 @@ public class UserController {
     @GetMapping("{id}")
     public User getUserById(@PathVariable("id") Long userId) {
         return userService.getUserById(userId);
+    }
+
+    @DeleteMapping("/{id}")
+    public User deleteUserByID(@PathVariable("id") Long userId) {
+        return userService.deleteUser(userId);
     }
 
     @PutMapping("{id}/friends/{friendId}")
