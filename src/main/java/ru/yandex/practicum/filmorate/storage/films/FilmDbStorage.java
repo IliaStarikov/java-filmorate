@@ -36,11 +36,11 @@ public class FilmDbStorage implements FilmStorage {
                         "mpa_id", film.getMpa().getId()))
                 .getKeys();
 
-        return film.toBuilder().id((Integer) columns.get("id")).build();
+        return film.toBuilder().id((Long) columns.get("id")).build();
     }
 
     @Override
-    public Film deleteFilm(Integer id) {
+    public Film deleteFilm(Long id) {
         Film deletedFilm = getFilm(id).get();
         String sqlQuery = "DELETE FROM films WHERE id = ?";
         jdbcTemplate.update(sqlQuery, id);
@@ -48,7 +48,7 @@ public class FilmDbStorage implements FilmStorage {
     }
 
     @Override
-    public Optional<Film> getFilm(Integer id) {
+    public Optional<Film> getFilm(Long id) {
 
         List<Film> films = jdbcTemplate.query("SELECT f.*, mpa.id AS mpa_id, mpa.name AS mpa_name " +
                         "FROM films f " +
@@ -88,7 +88,7 @@ public class FilmDbStorage implements FilmStorage {
 
     private Film mapRowToFilm(ResultSet resultSet, int rowNum) throws SQLException {
         return Film.builder()
-                .id(resultSet.getInt("id"))
+                .id(resultSet.getLong("id"))
                 .name(resultSet.getString("name"))
                 .description(resultSet.getString("description"))
                 .duration(resultSet.getInt("duration"))

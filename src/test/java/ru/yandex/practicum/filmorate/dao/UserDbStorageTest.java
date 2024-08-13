@@ -56,7 +56,7 @@ public class UserDbStorageTest {
     public void check_getUser_shouldFind() {
         UserDbStorage userDbStorage = new UserDbStorage(jdbcTemplate);
         userDbStorage.create(user);
-        User findUser = userDbStorage.getUser(1).get();
+        User findUser = userDbStorage.getUser(1L).get();
         assertEquals(user, findUser);
     }
 
@@ -64,7 +64,7 @@ public class UserDbStorageTest {
     public void check_deleteUser_shouldDelete() {
         UserDbStorage userDbStorage = new UserDbStorage(jdbcTemplate);
         userDbStorage.create(user);
-        User deletedUser = userDbStorage.deleteUser(1);
+        User deletedUser = userDbStorage.deleteUser(1L);
         assertEquals(user, deletedUser);
     }
 

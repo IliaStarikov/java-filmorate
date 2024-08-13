@@ -65,7 +65,7 @@ public class UserDbStorage implements UserStorage {
     }
 
     @Override
-    public Optional<User> getUser(Integer id) {
+    public Optional<User> getUser(Long id) {
         List<User> users = jdbcTemplate.query("SELECT * FROM users WHERE id = ?",
                 new Object[]{id},
                 this::mapRowToUser);
@@ -73,7 +73,7 @@ public class UserDbStorage implements UserStorage {
     }
 
     @Override
-    public User deleteUser(Integer id) {
+    public User deleteUser(Long id) {
         User user = getUser(id).get();
         jdbcTemplate.update("DELETE FROM users WHERE id = ?", id);
         return user;
@@ -81,7 +81,7 @@ public class UserDbStorage implements UserStorage {
 
     private User mapRowToUser(ResultSet resultSet, int rowNum) throws SQLException {
         return User.builder()
-                .id(resultSet.getInt("id"))
+                .id(resultSet.getLong("id"))
                 .name(resultSet.getString("name"))
                 .login(resultSet.getString("login"))
                 .email(resultSet.getString("email"))

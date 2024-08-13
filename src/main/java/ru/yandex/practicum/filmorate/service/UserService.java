@@ -46,34 +46,34 @@ public class UserService {
         return userDbStorage.update(user);
     }
 
-    public User getUserById(Integer id) {
+    public User getUserById(Long id) {
         User user = userDbStorage.getUser(id)
                 .orElseThrow(() -> new NotFoundException("Пользователь с id: " + id + " не найден."));
         log.info("Пользователь найден: {}.", user);
         return user;
     }
 
-    public User deleteUser(Integer id) {
+    public User deleteUser(Long id) {
         User user = getUserById(id);
         log.info("Пользователь удален: {}.", user);
         return userDbStorage.deleteUser(id);
     }
 
-    public void addFriend(Integer userId, Integer friendId) {
+    public void addFriend(Long userId, Long friendId) {
         getUserById(userId);
         getUserById(friendId);
         friendshipDbStorage.addFriend(userId, friendId);
         log.info("User № {} отправил запрос в друзья User № {}.", userId, friendId);
     }
 
-    public void endFriendship(Integer userId, Integer friendId) {
+    public void endFriendship(Long userId, Long friendId) {
         User user = getUserById(userId);
         User friend = getUserById(friendId);
         friendshipDbStorage.deleteFriend(userId, friendId);
         log.info("Пользователи {} и {} больше не друзья.", user, friend);
     }
 
-    public List<User> getFriends(Integer userId) {
+    public List<User> getFriends(Long userId) {
         getUserById(userId);
         List<User> friends = friendshipDbStorage.getUserFriends(userId);
         log.info("Запрос на получение списка друзей пользователя с id: {} выполнен. Список друзей: {}.",
@@ -81,7 +81,7 @@ public class UserService {
         return friends;
     }
 
-    public List<User> getCommonFriends(Integer userId, Integer friendId) {
+    public List<User> getCommonFriends(Long userId, Long friendId) {
         getUserById(userId);
         getUserById(friendId);
 

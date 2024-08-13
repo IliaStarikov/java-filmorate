@@ -36,24 +36,24 @@ public class FilmController {
     }
 
     @GetMapping("{id}")
-    public Film getFilmById(@PathVariable("id") Integer filmId) {
+    public Film getFilmById(@PathVariable("id") Long filmId) {
         return filmService.getFilmById(filmId);
     }
 
     @DeleteMapping("/{id}")
-    public Film deleteFilmByID(@PathVariable("id") Integer filmId) {
+    public Film deleteFilmByID(@PathVariable("id") Long filmId) {
         return filmService.deleteFilm(filmId);
     }
 
     @PutMapping("{id}/like/{userId}")
-    public void putLikeFilm(@PathVariable("id") Integer filmId,
-                            @PathVariable("userId") Integer userId) {
+    public void putLikeFilm(@PathVariable("id") Long filmId,
+                            @PathVariable("userId") Long userId) {
         filmService.addFilmLike(filmId, userId);
     }
 
     @DeleteMapping("{id}/like/{userId}")
-    public void deleteFilmLike(@PathVariable("id") Integer filmId,
-                               @PathVariable("userId") Integer userId) {
+    public void deleteFilmLike(@PathVariable("id") Long filmId,
+                               @PathVariable("userId") Long userId) {
         filmService.deleteFilmLike(filmId, userId);
     }
 

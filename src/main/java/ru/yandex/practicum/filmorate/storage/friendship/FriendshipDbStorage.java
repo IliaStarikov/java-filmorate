@@ -19,7 +19,7 @@ public class FriendshipDbStorage implements FriendshipStorage {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public void addFriend(int id1, int id2) {
+    public void addFriend(long id1, long id2) {
         String sqlQuery = "INSERT INTO friendship(user_id, friend_id) " +
                 "VALUES(?, ?)";
 
@@ -27,20 +27,20 @@ public class FriendshipDbStorage implements FriendshipStorage {
     }
 
     @Override
-    public void deleteFriend(int id1, int id2) {
+    public void deleteFriend(long id1, long id2) {
         String sqlQuery = "DELETE FROM friendship WHERE user_id = ? AND friend_id = ?";
         jdbcTemplate.update(sqlQuery, id1, id2);
     }
 
     @Override
-    public List<User> getUserFriends(int id) {
+    public List<User> getUserFriends(long id) {
         String sqlQuery = "SELECT friend_id FROM friendship WHERE user_id = ?";
 
         return getUsers(sqlQuery, new Object[]{id});
     }
 
     @Override
-    public List<User> getCommonFriends(int id1, int id2) {
+    public List<User> getCommonFriends(long id1, long id2) {
 
         String sqlQuery = "SELECT fr1.friend_id " +
                 "FROM friendship fr1 " +
@@ -63,10 +63,10 @@ public class FriendshipDbStorage implements FriendshipStorage {
     private List<User> getUsers(String sqlQuery, Object[] queryParam) {
         SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sqlQuery, queryParam);
 
-        List<Integer> listID = new ArrayList<>();
+        List<Long> listID = new ArrayList<>();
 
         while (sqlRowSet.next()) {
-            listID.add(sqlRowSet.getInt("friend_id"));
+            listID.add(sqlRowSet.getLong("friend_id"));
         }
 
         String placeholders = String.join(",", Collections.nCopies(listID.size(), "?"));

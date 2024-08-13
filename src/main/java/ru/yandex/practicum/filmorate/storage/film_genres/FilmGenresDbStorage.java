@@ -32,7 +32,7 @@ public class FilmGenresDbStorage implements FilmGenresStorage {
 
         jdbcTemplate.batchUpdate(sqlQuery, new BatchPreparedStatementSetter() {
             public void setValues(PreparedStatement ps, int i) throws SQLException {
-                ps.setInt(1, film.getId());
+                ps.setLong(1, film.getId());
                 ps.setInt(2, listOfGenre.get(i).getId());
             }
 
@@ -44,11 +44,11 @@ public class FilmGenresDbStorage implements FilmGenresStorage {
     }
 
     @Override
-    public Map<Integer, Set<Genre>> findGenreOfFilm(List<Film> films) {
+    public Map<Long, Set<Genre>> findGenreOfFilm(List<Film> films) {
 
-        Map<Integer, Set<Genre>> genres = new HashMap<>();
+        Map<Long, Set<Genre>> genres = new HashMap<>();
 
-        List<Integer> filmIds = films.stream().map(Film::getId).collect(Collectors.toList());
+        List<Long> filmIds = films.stream().map(Film::getId).collect(Collectors.toList());
 
         String placeholders = String.join(",", Collections.nCopies(filmIds.size(), "?"));
 
@@ -61,7 +61,7 @@ public class FilmGenresDbStorage implements FilmGenresStorage {
         SqlRowSet rs = jdbcTemplate.queryForRowSet(sqlQuery, filmIds.toArray());
 
         while (rs.next()) {
-            int filmID = rs.getInt("film_id");
+            long filmID = rs.getInt("film_id");
 
             Genre genre = Genre.builder()
                     .id(rs.getInt("genre_id"))
@@ -75,7 +75,7 @@ public class FilmGenresDbStorage implements FilmGenresStorage {
     }
 
     @Override
-    public void removeGenreFromFilm(int id) {
+    public void removeGenreFromFilm(long id) {
 
         String sqlQuery = "DELETE FROM film_genres " +
                 "WHERE film_id = ?";
@@ -96,7 +96,7 @@ public class FilmGenresDbStorage implements FilmGenresStorage {
 
         jdbcTemplate.batchUpdate(sqlQuery, new BatchPreparedStatementSetter() {
             public void setValues(PreparedStatement ps, int i) throws SQLException {
-                ps.setInt(1, film.getId());
+                ps.setLong(1, film.getId());
                 ps.setInt(2, listOfGenre.get(i).getId());
             }
 

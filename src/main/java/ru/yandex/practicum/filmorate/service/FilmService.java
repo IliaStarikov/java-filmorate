@@ -34,7 +34,7 @@ public class FilmService {
     public List<Film> getAll() {
         List<Film> films = filmDbStorage.getAll();
 
-        Map<Integer, Set<Genre>> mapFilmGenre = filmGenresDbStorage.findGenreOfFilm(films);
+        Map<Long, Set<Genre>> mapFilmGenre = filmGenresDbStorage.findGenreOfFilm(films);
 
         films.forEach(film -> Optional.ofNullable(mapFilmGenre.get(film.getId()))
                 .ifPresent(film::addGenre)
@@ -81,7 +81,7 @@ public class FilmService {
         return film;
     }
 
-    public Film deleteFilm(Integer id) {
+    public Film deleteFilm(Long id) {
         Film filmForDelete = getFilmById(id);
 
         filmDbStorage.deleteFilm(id);
@@ -90,7 +90,7 @@ public class FilmService {
         return filmForDelete;
     }
 
-    public Film getFilmById(Integer filmId) {
+    public Film getFilmById(Long filmId) {
         Film findFilm = filmDbStorage.getFilm(filmId)
                 .orElseThrow(() -> new NotFoundException("Фильм с id: " + filmId + " не найден."));
 
@@ -102,12 +102,12 @@ public class FilmService {
         return findFilm;
     }
 
-    public void addFilmLike(Integer filmId, Integer userId) {
+    public void addFilmLike(Long filmId, Long userId) {
         likesFilmDbStorage.addLikeFilm(filmId, userId);
         log.info("Пользователь с id: {} поставил 'like' фильму с id: {}.", userId, filmId);
     }
 
-    public void deleteFilmLike(Integer filmId, Integer userId) {
+    public void deleteFilmLike(Long filmId, Long userId) {
         likesFilmDbStorage.deleteLikeFilm(filmId, userId);
         log.info("Пользователь с id: {} удалил 'like' у фильма с id: {}.", userId, filmId);
     }
@@ -115,7 +115,7 @@ public class FilmService {
     public List<Film> getPopularFilms(Integer count) {
         List<Film> films = filmDbStorage.getAllPopularFilm(count);
 
-        Map<Integer, Set<Genre>> mapFilmsGenres = filmGenresDbStorage.findGenreOfFilm(films);
+        Map<Long, Set<Genre>> mapFilmsGenres = filmGenresDbStorage.findGenreOfFilm(films);
 
         films.forEach(film -> {
             Set<Genre> genres = mapFilmsGenres.getOrDefault(film.getId(), Set.of());

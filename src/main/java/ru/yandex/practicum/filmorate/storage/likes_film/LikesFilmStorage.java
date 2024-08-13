@@ -1,7 +1,7 @@
 package ru.yandex.practicum.filmorate.storage.likes_film;
 
 public interface LikesFilmStorage {
-    void addLikeFilm(int filmId, int userId);
+    void addLikeFilm(long filmId, long userId);
 
-    void deleteLikeFilm(int filmId, int userId);
+    void deleteLikeFilm(long filmId, long userId);
 }

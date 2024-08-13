@@ -18,7 +18,7 @@ import java.util.Set;
 @Data
 @Builder(toBuilder = true)
 public class Film {
-    private final int id;
+    private final long id;
 
     @NotBlank(message = "Название фильма не может быть пустым!")
     private String name;
@@ -39,7 +39,7 @@ public class Film {
     private final Set<Genre> genres = new LinkedHashSet<>();
 
     @Getter
-    private Set<Integer> likes;
+    private Set<Long> likes;
 
     public void addGenre(Set<Genre> genres) {
         this.genres.addAll(genres);

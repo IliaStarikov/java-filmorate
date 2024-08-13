@@ -10,9 +10,9 @@ import java.util.List;
 public interface FilmGenresStorage {
     void addGenreToFilm(Film film, Set<Genre> genres);
 
-    Map<Integer, Set<Genre>> findGenreOfFilm(List<Film> films);
+    Map<Long, Set<Genre>> findGenreOfFilm(List<Film> films);
 
     Set<Genre> removeGenreFromFilm(Film film, List<Genre> genres);
 
-    void removeGenreFromFilm(int id);
+    void removeGenreFromFilm(long id);
 }

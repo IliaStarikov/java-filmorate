@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Builder(toBuilder = true)
 public class User {
 
-    private final int id;
+    private final long id;
     private String name;
 
     @Email(message = "Неверный формат электронной почты")
